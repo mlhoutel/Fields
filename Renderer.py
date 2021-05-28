@@ -6,8 +6,9 @@ from Draggable import *
 
 class Renderer():
     def __init__(self):
-        self.XMAX, self.YMAX = 40, 40
-        self.nx, self.ny = 64, 64
+        self.XMAX, self.YMAX = 0.6, 0.6
+        self.density = 1.2
+        self.rx, self.ry = 40, 40
         self.system = System()
 
     def launch(self):
@@ -32,15 +33,14 @@ class Renderer():
         self.ax.collections = [] # clear arrowheads streamplot
 
     def dfield(self):
-        x = np.linspace(-self.XMAX, self.XMAX, self.nx)
-        y = np.linspace(-self.YMAX, self.YMAX, self.ny)
+        x = np.linspace(-self.XMAX, self.XMAX, self.rx)
+        y = np.linspace(-self.YMAX, self.YMAX, self.ry)
         X, Y = np.meshgrid(x, y)
-        [Bx, By] = self.system.field(X, Y)
+        [Ex, Ey] = self.system.field(X, Y, self.rx, self.ry)
         
         # Draw only if the field exists
-        if len(Bx) and len(By):
-            color = 2 * np.log(np.hypot(Bx, By))
-            stream = self.ax.streamplot(x, y, Bx, By, color=color, linewidth=1, cmap=plt.cm.inferno, density=2, arrowstyle='->', arrowsize=1.5)
+        if len(Ex) and len(Ey):
+            stream = self.ax.streamplot(x, y, Ex, Ey, color=(2*np.log(np.hypot(Ex, Ey))), linewidth=1, cmap=plt.cm.inferno, density=self.density, arrowstyle='->', arrowsize=1.5)
 
     def dpoints(self):
         self.draggables = []
