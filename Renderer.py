@@ -39,7 +39,6 @@ class Renderer():
         color = 2 * np.log(np.hypot(Bx, By))
         self.ax.streamplot(x, y, Bx, By, color=color, linewidth=1, cmap=plt.cm.inferno, density=2, arrowstyle='->', arrowsize=1.5)
 
-
     def dpoints(self):
         for point in self.system.points:
             circle = Circle((point.x, point.y), point.size, color='b', zorder=100)
@@ -50,5 +49,3 @@ class Renderer():
     def dwalls(self):
         for wall in self.system.walls:
             print("wall")
-
-Renderer()
