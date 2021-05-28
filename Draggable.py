@@ -3,10 +3,12 @@ import matplotlib.patches as patches
 
 class Draggable:
     lock = None # only one can be animated at a time
-    def __init__(self, point):
+    def __init__(self, point, update, object):
         self.point = point
         self.press = None
         self.background = None
+        self.update = update
+        self.object = object
 
     def connect(self):
         'connect to all the events we need'
@@ -54,6 +56,10 @@ class Draggable:
 
         # blit just the redrawn area
         canvas.blit(axes.bbox)
+        
+        self.object.x = self.point.center[0]
+        self.object.y = self.point.center[1]
+
 
     def on_release(self, event):
         'on release we reset the press data'
@@ -67,8 +73,12 @@ class Draggable:
         self.point.set_animated(False)
         self.background = None
 
+        # Update the system on release
+        self.update()
+
         # redraw the full figure
         self.point.figure.canvas.draw()
+
 
     def disconnect(self):
         'disconnect all the stored connection ids'

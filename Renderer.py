@@ -4,7 +4,6 @@ from matplotlib.patches import Circle
 from System import *
 from Draggable import *
 
-# plt.ion()
 class Renderer():
     def __init__(self):
         self.XMAX, self.YMAX = 40, 40
@@ -22,15 +21,16 @@ class Renderer():
         plt.show()
 
     def update(self):
-        self.system.update()
-
+        self.clear()
         self.dfield()
         self.dpoints()
         self.dwalls()
-        
-        # self.figure.canvas.draw()
-        # self.figure.canvas.flush_events()
     
+    def clear(self):
+        # self.ax = plt.gca()
+        self.ax.patches = [] # clear lines streamplot
+        self.ax.collections = [] # clear arrowheads streamplot
+
     def dfield(self):
         x = np.linspace(-self.XMAX, self.XMAX, self.nx)
         y = np.linspace(-self.YMAX, self.YMAX, self.ny)
@@ -40,16 +40,17 @@ class Renderer():
         # Draw only if the field exists
         if len(Bx) and len(By):
             color = 2 * np.log(np.hypot(Bx, By))
-            self.ax.streamplot(x, y, Bx, By, color=color, linewidth=1, cmap=plt.cm.inferno, density=2, arrowstyle='->', arrowsize=1.5)
+            stream = self.ax.streamplot(x, y, Bx, By, color=color, linewidth=1, cmap=plt.cm.inferno, density=2, arrowstyle='->', arrowsize=1.5)
 
     def dpoints(self):
         self.draggables = []
         for point in self.system.points:
             circle = Circle((point.x, point.y), point.size, color='b', zorder=100)
             self.ax.add_patch(circle)
-            draggable = Draggable(circle)
+            draggable = Draggable(circle, self.update, point)
             draggable.connect()
             self.draggables.append(draggable)
+
 
     def dwalls(self):
         for wall in self.system.walls:
