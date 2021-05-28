@@ -15,14 +15,11 @@ class System():
 
     def update(self):
         print("update")
-        # for point in self.points:
 
+    # temp function
     def B(self, r, theta):
-        # Mean magnitude of the Earth's magnetic field at the equator in T
         B0 = 3.12e-5
-        # Radius of Earth, Mm (10^6 m: mega-metres!)
         RE = 6.370
-        # Deviation of magnetic pole from axis
         alpha = np.radians(9.6)
 
         """Return the magnetic field vector at (r, theta)."""

@@ -49,7 +49,7 @@ class Renderer():
             draggable.connect()
 
     def dwalls(self):
-        for point in self.system.points:
+        for wall in self.system.walls:
             print("wall")
 
 Renderer()
