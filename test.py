@@ -4,6 +4,7 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
+from Draggable import *
 
 # Mean magnitude of the Earth's magnetic field at the equator in T
 B0 = 3.12e-5
@@ -42,11 +43,12 @@ fig, ax = plt.subplots()
 color = 2 * np.log(np.hypot(Bx, By))
 ax.streamplot(x, y, Bx, By, color=color, linewidth=1, cmap=plt.cm.inferno,
               density=2, arrowstyle='->', arrowsize=1.5)
-ax.streamplot(x, y, Bx, By, color=color, linewidth=1, cmap=plt.cm.inferno,
-              density=2, arrowstyle='->', arrowsize=1.5)
 
 # Add a filled circle for the Earth; make sure it's on top of the streamlines.
-ax.add_patch(Circle((posX, posY), RE, color='b', zorder=100))
+circle = Circle((posX, posY), RE, color='b', zorder=100)
+ax.add_patch(circle)
+dr = Draggable(circle)
+dr.connect()
 
 ax.set_xlabel('$x$')
 ax.set_ylabel('$y$')
