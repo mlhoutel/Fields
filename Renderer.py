@@ -1,6 +1,6 @@
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
-import numpy as np
 from System import *
 from Draggable import *
 
@@ -36,15 +36,20 @@ class Renderer():
         y = np.linspace(-self.YMAX, self.YMAX, self.ny)
         X, Y = np.meshgrid(x, y)
         [Bx, By] = self.system.field(X, Y)
-        color = 2 * np.log(np.hypot(Bx, By))
-        self.ax.streamplot(x, y, Bx, By, color=color, linewidth=1, cmap=plt.cm.inferno, density=2, arrowstyle='->', arrowsize=1.5)
+        
+        # Draw only if the field exists
+        if len(Bx) and len(By):
+            color = 2 * np.log(np.hypot(Bx, By))
+            self.ax.streamplot(x, y, Bx, By, color=color, linewidth=1, cmap=plt.cm.inferno, density=2, arrowstyle='->', arrowsize=1.5)
 
     def dpoints(self):
+        self.draggables = []
         for point in self.system.points:
             circle = Circle((point.x, point.y), point.size, color='b', zorder=100)
             self.ax.add_patch(circle)
             draggable = Draggable(circle)
             draggable.connect()
+            self.draggables.append(draggable)
 
     def dwalls(self):
         for wall in self.system.walls:
