@@ -10,7 +10,6 @@ class Renderer():
         self.XMAX, self.YMAX = 40, 40
         self.nx, self.ny = 64, 64
         self.system = System()
-        self.system.addPoint(Point(0, 0, 3))
 
     def launch(self):
         self.figure, self.ax = plt.subplots()
