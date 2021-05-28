@@ -1,8 +1,11 @@
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 from System import *
 from Draggable import *
+
+mpl.rcParams['toolbar'] = 'None' 
 
 class Renderer():
     def __init__(self):

@@ -42,13 +42,13 @@ class System():
         V = np.zeros((u, v))
 
         for point in self.points:
-            
-            shiftx = int(round(point.x / ((X[-1] - X[1])/dx)))
-            shifty = int(round(point.y / ((X[-1] + X[1])/dy)))
-            tX = np.concatenate((X[-shiftx:], X[:-shiftx]))
-            tY = np.concatenate((Y[-shifty:], Y[:-shifty]))
-            # tX = np.pad(X, shiftx, mode='constant')[:-shiftx]
-            # tY = np.pad(Y, shifty, mode='constant')[:-shifty]
+            # shiftx = int(round(point.x / ((X[-1] - X[1])/dx)))
+            # shifty = int(round(point.y / ((X[-1] + X[1])/dy)))
+            # tX = np.concatenate((X[-shiftx:], X[:-shiftx]))
+            # tY = np.concatenate((Y[-shifty:], Y[:-shifty]))
+
+            tX = [X[i]-point.x for i in range(np.size(X))]
+            tY = [Y[i]-point.y for i in range(np.size(Y))]
             E = np.array([self.compute(i, tX, tY) for i in range(size)], dtype=np.float)
             E.shape = (u, v)
             # E = np.pad(E,((shiftx,0),(0,shifty)), mode='constant')[:-shiftx,:-shifty]
