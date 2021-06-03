@@ -59,4 +59,4 @@ class Renderer():
 
     def dwalls(self):
         for wall in self.system.walls:
-            print("wall")
+            self.ax.plot([wall.x1, wall.y1], [wall.x2, wall.y2], marker = 'o')
