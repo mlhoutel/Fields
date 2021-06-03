@@ -14,7 +14,7 @@ class System():
         self.points.append(point)
 
     def addWall(self, wall):
-        self.points.append(wall)
+        self.walls.append(wall)
    
     def compute(self, i, X, Y, R, L, U):
         I = (U*self.gamma*2*np.pi)
