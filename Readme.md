@@ -12,6 +12,18 @@ conda install -c conda-forge matplotlib
 conda install -c anaconda numpy
 ```
 
+## Howto use
+
+```
+from Renderer import *
+
+renderer = Renderer()
+
+renderer.system.addPoint(Point(-0.3, -0.3, 0.03, 0.55, 10))
+
+renderer.launch()
+```
+
 ## Examples
 
 <p align="center"><img alt="Conglomerate" src="./docs/Capture.PNG"></p>
