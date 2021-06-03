@@ -12,7 +12,7 @@ conda install -c conda-forge matplotlib
 conda install -c anaconda numpy
 ```
 
-## Howto use
+## How to use
 
 ```
 from Renderer import *
