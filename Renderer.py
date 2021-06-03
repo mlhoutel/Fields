@@ -45,12 +45,12 @@ class Renderer():
         # Draw only if the field exists
         if len(Ex) and len(Ey):
             self.ax.streamplot(x, y, Ey, Ex, color=(2*np.log(np.hypot(Ex, Ey))), linewidth=1, cmap=plt.cm.inferno, density=self.density, arrowstyle='->', arrowsize=1.5)
-            self.ax.matshow(V, interpolation='nearest', alpha=1, extent=(-self.XMAX, self.XMAX, self.YMAX, -self.YMAX))
+            self.ax.matshow(V, interpolation='nearest', alpha=1, cmap=plt.cm.plasma, extent=(-self.XMAX, self.XMAX, self.YMAX, -self.YMAX))
 
     def dpoints(self):
         self.draggables = []
         for point in self.system.points:
-            circle = Circle((point.x, point.y), point.size, color='b', zorder=100)
+            circle = Circle((point.x, point.y), point.size, color=plt.cm.RdBu(mpl.colors.Normalize(vmin=-10, vmax=10)(point.tens)), zorder=100)
             self.ax.add_patch(circle)
             draggable = Draggable(circle, self.update, point)
             draggable.connect()
