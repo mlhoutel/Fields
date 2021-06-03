@@ -7,6 +7,8 @@ class System():
     def __init__(self):
         self.points = []
         self.walls = []
+        self.epsilon = 8.85418782e-12   # Permitivité
+        self.gamma = 0.04               # Conductivité
 
     def addPoint(self, point):
         self.points.append(point)
@@ -14,27 +16,21 @@ class System():
     def addWall(self, wall):
         self.points.append(wall)
    
-    def compute(self, i, X, Y):
-        R=0.005
-        L=0.55
-        U=10
-        epsilon = 8.85418782e-12
-        gamma = 0.04
-        lim = 0.1
-        I = (U*gamma*2*np.pi)
-        Sigma = (I*epsilon)/(gamma*4*np.pi*m.pow(R,2))
+    def compute(self, i, X, Y, R, L, U):
+        I = (U*self.gamma*2*np.pi)
+        Sigma = (I*self.epsilon) / (self.gamma*4*np.pi*m.pow(R,2))
         
-        R1 = m.sqrt(m.pow(-0.1 + L/2, 2) + m.pow(Y[i], 2) + m.pow(X[i], 2))
-        R2 = m.sqrt(m.pow(-0.1 - L/2, 2) + m.pow(Y[i], 2) + m.pow(X[i], 2))
+        R1 = m.sqrt(m.pow(L/2 + 0.1, 2) + m.pow(Y[i], 2) + m.pow(X[i], 2))
+        R2 = m.sqrt(m.pow(L/2 - 0.1, 2) + m.pow(Y[i], 2) + m.pow(X[i], 2))
         
         if (R1 < R):
-            return ((Sigma*m.pow(R, 2))/epsilon)*(1/R - 1/L)
+            return ((Sigma*m.pow(R, 2))/self.epsilon)*(1/R - 1/L)
         elif (R2 < R):
-            return -((Sigma*m.pow(R, 2))/epsilon)*(1/R - 1/L)
+            return -((Sigma*m.pow(R, 2))/self.epsilon)*(1/R - 1/L)
         else:
-            return ((Sigma*m.pow(R, 2))/epsilon)*(1/R1 - 1/R2)
+            return ((Sigma*m.pow(R, 2))/self.epsilon)*(1/R1 - 1/R2)
 
-    def field(self, X, Y, dx, dy):
+    def field(self, X, Y):
         u, v = X.shape
         size = np.size(X)
         X.shape = (size)
@@ -42,6 +38,7 @@ class System():
         V = np.zeros((u, v))
 
         for point in self.points:
+            # Loop shifting: removed for a better shifting
             # shiftx = int(round(point.x / ((X[-1] - X[1])/dx)))
             # shifty = int(round(point.y / ((X[-1] + X[1])/dy)))
             # tX = np.concatenate((X[-shiftx:], X[:-shiftx]))
@@ -49,9 +46,9 @@ class System():
 
             tX = [X[i]-point.x for i in range(np.size(X))]
             tY = [Y[i]-point.y for i in range(np.size(Y))]
-            E = np.array([self.compute(i, tX, tY) for i in range(size)], dtype=np.float)
+            E = np.array([self.compute(i, tX, tY, point.size, point.dist, point.tens) for i in range(size)], dtype=np.float)
             E.shape = (u, v)
             # E = np.pad(E,((shiftx,0),(0,shifty)), mode='constant')[:-shiftx,:-shifty]
             V = V + E
         
-        return np.gradient(V, dx, dy)
+        return V

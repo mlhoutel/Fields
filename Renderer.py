@@ -10,8 +10,8 @@ mpl.rcParams['toolbar'] = 'None'
 class Renderer():
     def __init__(self):
         self.XMAX, self.YMAX = 0.6, 0.6
-        self.density = 1.2
-        self.rx, self.ry = 40, 40
+        self.density = 1.6
+        self.rx, self.ry = 20, 20
         self.system = System()
 
     def launch(self):
@@ -39,11 +39,13 @@ class Renderer():
         x = np.linspace(-self.XMAX, self.XMAX, self.rx)
         y = np.linspace(-self.YMAX, self.YMAX, self.ry)
         X, Y = np.meshgrid(x, y)
-        [Ex, Ey] = self.system.field(X, Y, self.rx, self.ry)
+        V = self.system.field(X, Y)
+        [Ex, Ey] = np.gradient(V, self.rx, self.ry)
         
         # Draw only if the field exists
         if len(Ex) and len(Ey):
-            stream = self.ax.streamplot(x, y, Ex, Ey, color=(2*np.log(np.hypot(Ex, Ey))), linewidth=1, cmap=plt.cm.inferno, density=self.density, arrowstyle='->', arrowsize=1.5)
+            self.ax.streamplot(x, y, Ey, Ex, color=(2*np.log(np.hypot(Ex, Ey))), linewidth=1, cmap=plt.cm.inferno, density=self.density, arrowstyle='->', arrowsize=1.5)
+            self.ax.matshow(V, interpolation='nearest', alpha=1, extent=(-self.XMAX, self.XMAX, self.YMAX, -self.YMAX))
 
     def dpoints(self):
         self.draggables = []

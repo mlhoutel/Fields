@@ -1,5 +1,7 @@
 class Point():
-    def __init__(self, x, y, size):
-        self.x = x
-        self.y = y
-        self.size = size
+    def __init__(self, x, y, size, dist, tens):
+        self.x = x          # Position X (m)
+        self.y = y          # Position Y (m)
+        self.size = size    # Rayon (m)
+        self.dist = dist    # Distance (m)
+        self.tens = tens      # Tension (V)
