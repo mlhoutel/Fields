@@ -8,11 +8,11 @@ from Draggable import *
 mpl.rcParams['toolbar'] = 'None' 
 
 class Renderer():
-    def __init__(self):
-        self.XMAX, self.YMAX = 0.6, 0.6
-        self.density = 1.6
-        self.rx, self.ry = 20, 20
-        self.system = System()
+    def __init__(self, system, XMAX, YMAX, density, rx, ry):
+        self.system = system
+        self.XMAX, self.YMAX = XMAX, YMAX
+        self.density = density
+        self.rx, self.ry = rx, ry
 
     def launch(self):
         self.figure, self.ax = plt.subplots()

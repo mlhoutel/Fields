@@ -17,7 +17,8 @@ conda install -c anaconda numpy
 ```
 from Renderer import *
 
-renderer = Renderer()
+system = System(8.85418782e-12, 0.04)
+renderer = Renderer(system, 0.6, 0.6, 1.6, 20, 20)
 
 renderer.system.addPoint(Point(-0.3, -0.3, 0.03, 0.55, 10))
 

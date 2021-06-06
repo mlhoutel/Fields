@@ -4,11 +4,11 @@ import numpy as np
 import math as m
 
 class System():
-    def __init__(self):
-        self.points = []
-        self.walls = []
-        self.epsilon = 8.85418782e-12   # Permitivité
-        self.gamma = 0.04               # Conductivité
+    def __init__(self, epsilon, gamma):
+        self.points = []        # Array of Points
+        self.walls = []         # Array of Walls
+        self.epsilon = epsilon  # Permitivité
+        self.gamma = gamma      # Conductivité
 
     def addPoint(self, point):
         self.points.append(point)
