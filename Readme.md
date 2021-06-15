@@ -26,8 +26,10 @@ renderer.launch()
 
 ## Examples
 
-<p align="center"><img alt="Conglomerate" src="./docs/Capture.PNG"></p>
+<p align="center"><img alt="Conglomerate" src="./docs/Capture1.PNG"></p>
 
 <p align="center"><img alt="Conglomerate" src="./docs/Capture2.PNG"></p>
+
+<p align="center"><img alt="Conglomerate" src="./docs/Capture3.PNG"></p>
 
 <p align="center"><img alt="Conglomerate" src="./docs/Drag.gif"></p>
