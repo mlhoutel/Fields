@@ -50,7 +50,7 @@ class Renderer():
     def dpoints(self):
         self.draggables = []
         for point in self.system.points:
-            circle = Circle((point.x, point.y), point.size, color=plt.cm.RdBu(mpl.colors.Normalize(vmin=-10, vmax=10)(point.tens)), zorder=100)
+            circle = Circle((point.x, point.y), point.size, color=plt.cm.RdBu(mpl.colors.Normalize(vmin=-10, vmax=10)(-point.tens)), zorder=100)
             self.ax.add_patch(circle)
             draggable = Draggable(circle, self.update, point)
             draggable.connect()
