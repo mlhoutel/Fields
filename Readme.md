@@ -17,10 +17,9 @@ conda install -c anaconda numpy
 ```
 from Renderer import *
 
-system = System(8.85418782e-12, 0.04)
-renderer = Renderer(system, 0.6, 0.6, 1.6, 20, 20)
-
-renderer.system.addPoint(Point(-0.3, -0.3, 0.03, 0.55, 10))
+system = System(8.85418782e-12, 0.04)                         # permitivity, conductivity
+renderer = Renderer(system, 0.6, 0.6, 1.6, 20, 20)            # system, x-axis, y-axis, density, x-res, y-res
+renderer.system.addPoint(Point(-0.3, -0.3, 0.55, 10))         # x-pos, y-pos, ray, tension
 
 renderer.launch()
 ```
