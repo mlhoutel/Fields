@@ -3,5 +3,4 @@ class Point():
         self.x = x          # Position X (m)
         self.y = y          # Position Y (m)
         self.size = size    # Rayon      (m)
-        self.dist = dist    # Distance   (m)
         self.tens = tens    # Tension    (V)

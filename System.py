@@ -16,19 +16,16 @@ class System():
     def addWall(self, wall):
         self.walls.append(wall)
    
-    def compute(self, i, X, Y, R, L, U):
+    def compute(self, i, X, Y, R, U):
         I = (U*self.gamma*2*np.pi)
         Sigma = (I*self.epsilon) / (self.gamma*4*np.pi*m.pow(R,2))
         
-        R1 = m.sqrt(m.pow(L/2 + 0.1, 2) + m.pow(Y[i], 2) + m.pow(X[i], 2))
-        R2 = m.sqrt(m.pow(L/2 - 0.1, 2) + m.pow(Y[i], 2) + m.pow(X[i], 2))
+        dist = m.sqrt(m.pow(Y[i], 2) + m.pow(X[i], 2)) # Euclidean distance
         
-        if (R1 < R):
-            return ((Sigma*m.pow(R, 2))/self.epsilon)*(1/R - 1/L)
-        elif (R2 < R):
-            return -((Sigma*m.pow(R, 2))/self.epsilon)*(1/R - 1/L)
+        if (dist < R):
+            return ((Sigma*m.pow(R, 2))/self.epsilon)*(1/R) # Constant when we are inside the point
         else:
-            return ((Sigma*m.pow(R, 2))/self.epsilon)*(1/R1 - 1/R2)
+            return ((Sigma*m.pow(R, 2))/self.epsilon)*(1/dist) 
 
     def field(self, X, Y):
         u, v = X.shape
@@ -46,7 +43,7 @@ class System():
 
             tX = [X[i]-point.x for i in range(np.size(X))]
             tY = [Y[i]-point.y for i in range(np.size(Y))]
-            E = np.array([self.compute(i, tX, tY, point.size, point.dist, point.tens) for i in range(size)], dtype=np.float)
+            E = np.array([self.compute(i, tX, tY, point.size, point.tens) for i in range(size)], dtype=np.float)
             E.shape = (u, v)
             # E = np.pad(E,((shiftx,0),(0,shifty)), mode='constant')[:-shiftx,:-shifty]
             V = V + E
